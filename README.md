@@ -1,0 +1,2 @@
+# euler-tasks
+Euler project
