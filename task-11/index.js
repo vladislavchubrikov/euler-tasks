@@ -1,3 +1,5 @@
+//O(n^2)
+
 function maxProduct() {
   console.time('TIME')
 
@@ -33,39 +35,39 @@ function maxProduct() {
     maxDiagonal1Product = 0,
     maxDiagonal2Product = 0;
 
-  for (let rowsNum = 0; rowsNum < rows; rowsNum++) {
-    for (let colsNum = 3; colsNum < columns; colsNum++) {
+  for (let rowsNum = 0; rowsNum < rows - 3; rowsNum++) {
+    for (let colsNum = 0; colsNum < columns - 3; colsNum++) {
       const rowProduct = matrix[rowsNum][colsNum]
-        * matrix[rowsNum][colsNum - 1]
-        * matrix[rowsNum][colsNum - 2]
-        * matrix[rowsNum][colsNum - 3];
+        * matrix[rowsNum][colsNum + 1]
+        * matrix[rowsNum][colsNum + 2]
+        * matrix[rowsNum][colsNum + 3];
 
       if (rowProduct > maxRowProduct) {
         maxRowProduct = rowProduct;
       }
 
       const columnProduct = matrix[colsNum][rowsNum]
-        * matrix[colsNum][rowsNum + 1]
-        * matrix[colsNum][rowsNum + 2]
-        * matrix[colsNum][rowsNum + 3];
+        * matrix[colsNum + 1][rowsNum]
+        * matrix[colsNum + 2][rowsNum]
+        * matrix[colsNum + 3][rowsNum];
 
       if (columnProduct > maxColumnProduct) {
         maxColumnProduct = columnProduct;
       }
 
-      const diagonal1Product = matrix[rowsNum][colsNum]
-        * matrix[rowsNum + 1][colsNum - 1]
-        * matrix[rowsNum + 2][colsNum - 2]
-        * matrix[rowsNum + 3][colsNum - 3];
+      const diagonal1Product = matrix[rowsNum][columns - colsNum - 1]
+        * matrix[rowsNum + 1][columns - colsNum - 2]
+        * matrix[rowsNum + 2][columns - colsNum - 3]
+        * matrix[rowsNum + 3][columns - colsNum - 4];
 
       if (diagonal1Product > maxDiagonal1Product) {
         maxDiagonal1Product = diagonal1Product;
       }
 
-      const diagonal2Product = matrix[colsNum][rowsNum]
-        * matrix[colsNum - 1][rowsNum + 1]
-        * matrix[colsNum - 2][rowsNum + 2]
-        * matrix[colsNum - 3][rowsNum + 3];
+      const diagonal2Product = matrix[rowsNum][colsNum]
+        * matrix[rowsNum + 1][colsNum + 1]
+        * matrix[rowsNum + 2][colsNum + 2]
+        * matrix[rowsNum + 3][colsNum + 3];
 
       if (diagonal2Product > maxDiagonal2Product) {
         maxDiagonal2Product = diagonal2Product;
@@ -78,9 +80,8 @@ function maxProduct() {
   results.push(maxDiagonal1Product);
   results.push(maxDiagonal2Product);
 
-  console.timeEnd('TIME')
-
   console.log(Math.max(results[0], results[1], results[2], results[3]));
+  console.timeEnd('TIME')
 }
 
 maxProduct();
